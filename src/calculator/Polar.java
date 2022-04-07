@@ -1,6 +1,8 @@
 package calculator;
 
-public class Polar {
+import java.io.Serializable;
+
+public class Polar implements Serializable {
     private double angle, radius;
     public double getAngle() {
         return angle;

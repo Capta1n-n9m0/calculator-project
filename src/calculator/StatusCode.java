@@ -1,6 +1,8 @@
 package calculator;
 
-public enum StatusCode {
+import java.io.Serializable;
+
+public enum StatusCode implements Serializable {
     OK,
     SyntaxError,
     DivisionByZero,

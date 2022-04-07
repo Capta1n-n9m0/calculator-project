@@ -1,6 +1,8 @@
 package calculator;
 
-public class Coordinate {
+import java.io.Serializable;
+
+public class Coordinate implements Serializable {
     private double x, y;
     public double getX() {
         return x;

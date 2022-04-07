@@ -1,6 +1,8 @@
 package calculator;
 
-public class Result {
+import java.io.Serializable;
+
+public class Result implements Serializable {
     private Complex answer;
     private StatusCode statusCode;
 
@@ -14,5 +16,8 @@ public class Result {
     }
     public StatusCode getStatusCode() {
         return statusCode;
+    }
+    public boolean isOk(){
+        return statusCode.equals(StatusCode.OK);
     }
 }

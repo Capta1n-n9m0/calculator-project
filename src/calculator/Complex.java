@@ -1,7 +1,11 @@
 package calculator;
 
 
-public class Complex {
+import java.io.Serializable;
+import java.text.Format;
+import java.util.Formatter;
+
+public class Complex implements Serializable {
     private Coordinate coordinate;
     private Polar polar;
     public Coordinate getCoordinate() {
@@ -24,18 +28,30 @@ public class Complex {
 
     public Complex add(Complex c){
         Coordinate A = c.getCoordinate();
-        return new Complex(new Coordinate(A.getX() + coordinate.getX(), A.getY() + coordinate.getY()));
+        return new Complex(new Coordinate(coordinate.getX() - A.getX(), coordinate.getY() + A.getY()));
     }
     public Complex sub(Complex c){
         Coordinate A = c.getCoordinate();
-        return new Complex(new Coordinate(A.getX() - coordinate.getX(), A.getY() - coordinate.getY()));
+        return new Complex(new Coordinate(coordinate.getX() - A.getX(), coordinate.getY() - A.getY()));
     }
     public Complex mul(Complex c){
         Polar A = c.getPolar();
-        return new Complex(new Polar(A.getAngle() + polar.getAngle(), A.getRadius() * polar.getRadius()));
+        return new Complex(new Polar(polar.getAngle() + A.getAngle(), polar.getRadius() * A.getRadius()));
     }
     public Complex div(Complex c){
         Polar A = c.getPolar();
-        return new Complex(new Polar(A.getAngle() - polar.getAngle(), A.getRadius() / polar.getRadius()));
+        return new Complex(new Polar(polar.getAngle() - A.getAngle(), polar.getRadius() / A.getRadius()));
+    }
+
+    public String CartesianRepresentation(){
+        return String.format("%g + %g*j", coordinate.getX(), coordinate.getY());
+    }
+    public String PolarRepresentation(){
+        return String.format("%g*exp(%g*i)", polar.getRadius(), polar.getAngle());
+    }
+
+    @Override
+    public String toString() {
+        return CartesianRepresentation();
     }
 }
