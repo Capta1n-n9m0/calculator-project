@@ -52,6 +52,6 @@ public class Complex implements Serializable {
 
     @Override
     public String toString() {
-        return CartesianRepresentation();
+        return String.format("{%s; %s}", CartesianRepresentation(), PolarRepresentation());
     }
 }

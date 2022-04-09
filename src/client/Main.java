@@ -8,7 +8,11 @@ import java.rmi.registry.Registry;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        //testing here
+        // testArithmetics();
+        testGUI();
+    }
+    public static void testArithmetics() throws Exception {
+        //testing arithmetics here
         System.out.println("Connecting to server.");
         Registry registry = LocateRegistry.getRegistry(Constants.SERVER, Constants.PORT);
 
@@ -19,6 +23,10 @@ public class Main {
         Complex c1 = new Complex(new Coordinate(4,3));
         Complex c2 = new Complex(new Coordinate(-12, 5));
         Complex c3 = new Complex(new Polar(Math.PI/2, 0));
+
+        System.out.println("c1 = " + c1);
+        System.out.println("c2 = " + c2);
+        System.out.println("c3 = " + c3);
 
         System.out.println("Running tests.");
         Result res1 = stub.add(c1, c2);
@@ -42,5 +50,8 @@ public class Main {
 
         System.out.println("Done. Press Enter to close.");
         System.in.read();
+    }
+    public static void testGUI() throws Exception{
+        UserInterface UI = new UserInterface();
     }
 }

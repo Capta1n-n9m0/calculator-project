@@ -1,4 +1,7 @@
 package client;
 
-public class UserInterface {
+import javax.swing.*;
+
+public class UserInterface extends JFrame {
+
 }
