@@ -3,13 +3,15 @@ package client;
 import calculator.*;
 import constants.Constants;
 
+
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 public class Main {
     public static void main(String[] args) throws Exception {
         // testArithmetics();
-        testGUI();
+        // testGUI();
+        testExpression();
     }
     public static void testArithmetics() throws Exception {
         //testing arithmetics here
@@ -53,5 +55,24 @@ public class Main {
     }
     public static void testGUI() throws Exception{
         UserInterface UI = new UserInterface();
+    }
+    public static void testExpression() throws Exception{
+        System.out.println("Creating testing data.");
+        Complex c1 = new Complex(new Coordinate(4,3));
+        Complex c2 = new Complex(new Coordinate(-12, 5));
+        Complex c3 = new Complex(new Coordinate(6, 7));
+
+        System.out.println("c1 = " + c1);
+        System.out.println("c2 = " + c2);
+        System.out.println("c3 = " + c3);
+
+        System.out.println("Calculating c1 + (c2 + c3)*c1");
+        //c1 + (c2 + c3)*c1
+        Result r = (new Expression(c1, Operation.ADD,
+                new Expression(new Expression(c2, Operation.ADD, c3), Operation.MULTIPLY, c1))).Calculate();
+
+        System.out.println(r.getAnswer());
+
+
     }
 }

@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.text.Format;
 import java.util.Formatter;
 
-public class Complex implements Serializable {
+public class Complex implements Serializable, ICalculable {
     private Coordinate coordinate;
     private Polar polar;
     public Coordinate getCoordinate() {
@@ -45,6 +45,10 @@ public class Complex implements Serializable {
     public Complex div(Complex c){
         Polar A = c.getPolar();
         return new Complex(new Polar(polar.getAngle() - A.getAngle(), polar.getRadius() / A.getRadius()));
+    }
+
+    public Complex getValue() {
+        return this;
     }
 
     public String CartesianRepresentation(){
