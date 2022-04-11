@@ -25,6 +25,10 @@ public class Complex implements Serializable {
         this.polar = new Polar(a, r);
         this.coordinate = new Coordinate(r*Math.cos(a), r*Math.sin(a));
     }
+    public Complex(Complex c){
+        this.coordinate = new Coordinate(c.getCoordinate());
+        this.polar = new Polar(c.getPolar());
+    }
 
     public Complex add(Complex c){
         Coordinate A = c.getCoordinate();
