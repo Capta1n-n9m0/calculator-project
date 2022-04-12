@@ -4,8 +4,8 @@ import java.beans.Expression;
 import java.io.Serializable;
 
 public class Result implements Serializable {
-    private Complex answer;
-    private StatusCode statusCode;
+    private final Complex answer;
+    private final StatusCode statusCode;
 
     public Result(Complex answer, StatusCode statusCode){
         this.answer = answer;
@@ -20,5 +20,27 @@ public class Result implements Serializable {
     }
     public boolean isOk(){
         return statusCode.equals(StatusCode.OK);
+    }
+
+    public String toString() {
+        String s;
+        switch (statusCode) {
+            case OK -> {
+                s = "OK";
+            }
+            case SyntaxError -> {
+                s = "SyntaxError";
+            }
+            case DivisionByZero -> {
+                s = "DivisionByZero";
+            }
+            case IncorrectInputError -> {
+                s = "IncorrectInputError";
+            }
+            default -> {
+                throw new IllegalStateException("Unknown status code: " + statusCode);
+            }
+        }
+        return String.format("Result { %s; %s}", s, answer);
     }
 }

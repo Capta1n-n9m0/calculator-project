@@ -9,9 +9,14 @@ import java.rmi.registry.Registry;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+        // Tests
         // testArithmetics();
         // testGUI();
         testExpression();
+
+        //closing
+        System.out.println("Done. Press Enter to close.");
+        System.in.read();
     }
     public static void testArithmetics() throws Exception {
         //testing arithmetics here
@@ -49,30 +54,42 @@ public class Main {
         if(res4.isOk()){
             System.out.println("r4. c3 - c2 = " + res4.getAnswer());
         }
-
-        System.out.println("Done. Press Enter to close.");
-        System.in.read();
     }
     public static void testGUI() throws Exception{
         UserInterface UI = new UserInterface();
     }
     public static void testExpression() throws Exception{
         System.out.println("Creating testing data.");
+        Complex c0 = new Complex(new Polar(Math.PI/2, 0));
         Complex c1 = new Complex(new Coordinate(4,3));
         Complex c2 = new Complex(new Coordinate(-12, 5));
         Complex c3 = new Complex(new Coordinate(6, 7));
 
+        System.out.println("c0 = " + c0);
         System.out.println("c1 = " + c1);
         System.out.println("c2 = " + c2);
         System.out.println("c3 = " + c3);
 
-        System.out.println("Calculating c1 + (c2 + c3)*c1");
+        System.out.println("Calculating r1 = c1 + (c2 + c3)*c1");
+        System.out.println("Calculating r2 = r1 * c0");
+        System.out.println("Calculating r3 = r1 / c0");
+
         //c1 + (c2 + c3)*c1
-        Result r = (new Expression(c1, Operation.ADD,
-                new Expression(new Expression(c2, Operation.ADD, c3), Operation.MULTIPLY, c1))).Calculate();
+        Result r1 = (
+                new Expression(
+                c1, Operation.ADD, new Expression(
+                        new Expression(
+                                c2, Operation.ADD, c3
+                        ), Operation.MULTIPLY, c1)
+                )
+            ).Calculate();
 
-        System.out.println(r.getAnswer());
+        Result r2 = (new Expression(r1.getAnswer(), Operation.MULTIPLY, c0)).Calculate();
+        Result r3 = (new Expression(r1.getAnswer(), Operation.DIVIDE, c0)).Calculate();
 
 
+        System.out.println("r1 = " + r1);
+        System.out.println("r2 = " + r2);
+        System.out.println("r3 = " + r3);
     }
 }
