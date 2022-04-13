@@ -48,6 +48,15 @@ public class Expression implements ICalculable{
     public Result Calculate() throws Exception{
         if(result != null)
             return new Result(result, StatusCode.OK);
+        if(value1 == null){
+            return calculator.add(Constants.ZERO_COMPLEX.getValue(), Constants.ZERO_COMPLEX);
+        }else{
+            if(operation == null){
+                return calculator.add(value1.getValue(), Constants.ZERO_COMPLEX.getValue());
+            }else {
+                value2 = value1;
+            }
+        }
         switch (this.operation){
             case ADD -> {
                 return calculator.add(value1.getValue(), value2.getValue());
@@ -65,26 +74,29 @@ public class Expression implements ICalculable{
         }
     }
 
-
+    // These setters are wrong, but it works for now
     public ICalculable getValue1() {
         return value1;
     }
-    public void setValue1(ICalculable value1) {
+    public Expression setValue1(ICalculable value1) {
         this.result = null;
         this.value1 = value1;
+        return this;
     }
     public ICalculable getValue2() {
         return value2;
     }
-    public void setValue2(ICalculable value2) {
+    public Expression setValue2(ICalculable value2) {
         this.result = null;
         this.value2 = value2;
+        return this;
     }
     public Operation getOperation() {
         return operation;
     }
-    public void setOperation(Operation operation) {
+    public Expression setOperation(Operation operation) {
         this.result = null;
         this.operation = operation;
+        return this;
     }
 }

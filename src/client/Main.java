@@ -29,7 +29,7 @@ public class Main {
         System.out.println("Creating testing data.");
         Complex c1 = new Complex(new Coordinate(4,3));
         Complex c2 = new Complex(new Coordinate(-12, 5));
-        Complex c3 = new Complex(new Polar(Math.PI/2, 0));
+        Complex c3 = new Complex(new Polar(0, Math.PI/2));
 
         System.out.println("c1 = " + c1);
         System.out.println("c2 = " + c2);
@@ -60,7 +60,7 @@ public class Main {
     }
     public static void testExpression() throws Exception{
         System.out.println("Creating testing data.");
-        Complex c0 = new Complex(new Polar(Math.PI/2, 0));
+        Complex c0 = new Complex(new Polar(0, Math.PI/2));
         Complex c1 = new Complex(new Coordinate(4,3));
         Complex c2 = new Complex(new Coordinate(-12, 5));
         Complex c3 = new Complex(new Coordinate(6, 7));
@@ -83,13 +83,21 @@ public class Main {
                         ), Operation.MULTIPLY, c1)
                 )
             ).Calculate();
-
         Result r2 = (new Expression(r1.getAnswer(), Operation.MULTIPLY, c0)).Calculate();
+        System.out.println("c0 = " + c0);
         Result r3 = (new Expression(r1.getAnswer(), Operation.DIVIDE, c0)).Calculate();
-
+        Result r4 = new Expression(c1)
+                .setOperation(Operation.ADD)
+                .setValue2(new Expression(new Expression()
+                            .setValue1(c2)
+                            .setOperation(Operation.ADD)
+                            .setValue2(c3))
+                        .setOperation(Operation.MULTIPLY)
+                        .setValue2(c1)).Calculate();
 
         System.out.println("r1 = " + r1);
         System.out.println("r2 = " + r2);
         System.out.println("r3 = " + r3);
+        System.out.println("r4 = " + r4);
     }
 }

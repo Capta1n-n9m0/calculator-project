@@ -11,7 +11,7 @@ public class Polar implements Serializable {
         return radius;
     }
 
-    public Polar(double angle, double radius){
+    public Polar(double radius, double angle){
         this.angle = angle % (Math.PI*2);
         this.radius = Math.abs(radius);
     }

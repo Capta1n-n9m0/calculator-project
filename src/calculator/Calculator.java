@@ -1,22 +1,22 @@
 package calculator;
 
 public class Calculator implements ICalculator{
-    public void DebugCall(Complex c1, Complex c2, String op, Result r){
+    public void DebugCall(Complex c1, String op, Complex c2, Result r){
         System.out.printf("Calculator called: %s %s %s = %s%n", c1, op, c2, r);
     }
     public Result add(Complex c1, Complex c2){
         Result r = new Result(c1.add(c2), StatusCode.OK);
-        DebugCall(c1, c2, "+", r);
+        DebugCall(c1, "+", c2, r);
         return r;
     }
     public Result subtract(Complex c1, Complex c2){
         Result r = new Result(c1.sub(c2), StatusCode.OK);
-        DebugCall(c1, c2, "-", r);
+        DebugCall(c1, "-", c2, r);
         return r;
     }
     public Result multiply(Complex c1, Complex c2){
         Result r = new Result(c1.mul(c2), StatusCode.OK);
-        DebugCall(c1, c2, "*", r);
+        DebugCall(c1, "*", c2, r);
         return r;
     }
     public Result divide(Complex c1, Complex c2){
@@ -25,7 +25,7 @@ public class Calculator implements ICalculator{
             r = new Result(null, StatusCode.DivisionByZero);
         else
             r = new Result(c1.div(c2), StatusCode.OK);
-        DebugCall(c1, c2, "/", r);
+        DebugCall(c1, "/", c2, r);
         return r;
     }
 }

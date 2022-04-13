@@ -2,8 +2,6 @@ package calculator;
 
 
 import java.io.Serializable;
-import java.text.Format;
-import java.util.Formatter;
 
 public class Complex implements Serializable, ICalculable {
     private Coordinate coordinate;
@@ -18,11 +16,11 @@ public class Complex implements Serializable, ICalculable {
     public Complex(Coordinate c){
         double x = c.getX(), y = c.getY();
         this.coordinate = new Coordinate(x, y);
-        this.polar = new Polar(Math.atan(y/x),Math.sqrt(x*x + y*y));
+        this.polar = new Polar(Math.sqrt(x*x + y*y), Math.atan(y/x));
     }
     public Complex(Polar p){
         double r = p.getRadius(), a = p.getAngle();
-        this.polar = new Polar(a, r);
+        this.polar = new Polar(r, a);
         this.coordinate = new Coordinate(r*Math.cos(a), r*Math.sin(a));
     }
     public Complex(Complex c){
@@ -40,11 +38,11 @@ public class Complex implements Serializable, ICalculable {
     }
     public Complex mul(Complex c){
         Polar A = c.getPolar();
-        return new Complex(new Polar(polar.getAngle() + A.getAngle(), polar.getRadius() * A.getRadius()));
+        return new Complex(new Polar(polar.getRadius() * A.getRadius(), polar.getAngle() + A.getAngle()));
     }
     public Complex div(Complex c){
         Polar A = c.getPolar();
-        return new Complex(new Polar(polar.getAngle() - A.getAngle(), polar.getRadius() / A.getRadius()));
+        return new Complex(new Polar(polar.getRadius() / A.getRadius(), polar.getAngle() - A.getAngle()));
     }
 
     public Complex getValue() {
