@@ -1,8 +1,8 @@
 package constants;
 
-import calculator.Complex;
-import calculator.Coordinate;
-import calculator.Polar;
+import numerics.Complex;
+import numerics.Coordinate;
+import numerics.Polar;
 
 public class Constants {
     public static int PORT = 5900;

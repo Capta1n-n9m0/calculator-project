@@ -1,5 +1,7 @@
 package calculator;
 
+import numerics.Complex;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 

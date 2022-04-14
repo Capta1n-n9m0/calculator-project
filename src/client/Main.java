@@ -2,6 +2,7 @@ package client;
 
 import calculator.*;
 import constants.Constants;
+import numerics.*;
 
 
 import java.rmi.registry.LocateRegistry;
@@ -12,7 +13,8 @@ public class Main {
         // Tests
         // testArithmetics();
         // testGUI();
-        testExpression();
+        // testExpression();
+        testTokens();
 
         //closing
         System.out.println("Done. Press Enter to close.");
@@ -99,5 +101,9 @@ public class Main {
         System.out.println("r2 = " + r2);
         System.out.println("r3 = " + r3);
         System.out.println("r4 = " + r4);
+    }
+    public static void testTokens() throws Exception{
+        String s1 = "1+2i+5+(12i-1/(3+2i))*2";
+        System.out.println("s1 = " + s1);
     }
 }

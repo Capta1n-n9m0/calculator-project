@@ -1,11 +1,12 @@
-package calculator;
+package numerics;
 
+import calculator.*;
 import constants.Constants;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-public class Expression implements ICalculable{
+public class Expression implements ICalculable {
     /**
      * Expression class allows dynamically constructing and
      * calculating mathematical expressions.

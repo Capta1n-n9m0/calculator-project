@@ -1,6 +1,7 @@
 package calculator;
 
-import java.beans.Expression;
+import numerics.Complex;
+
 import java.io.Serializable;
 
 public class Result implements Serializable {

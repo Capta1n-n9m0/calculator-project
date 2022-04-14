@@ -1,4 +1,4 @@
-package calculator;
+package numerics;
 
 import java.io.Serializable;
 

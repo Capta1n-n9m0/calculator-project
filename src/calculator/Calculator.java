@@ -1,5 +1,7 @@
 package calculator;
 
+import numerics.Complex;
+
 public class Calculator implements ICalculator{
     public void DebugCall(Complex c1, String op, Complex c2, Result r){
         System.out.printf("Calculator called: %s %s %s = %s%n", c1, op, c2, r);

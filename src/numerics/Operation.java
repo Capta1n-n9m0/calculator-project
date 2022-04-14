@@ -1,4 +1,4 @@
-package calculator;
+package numerics;
 
 public enum Operation {
     ADD,
