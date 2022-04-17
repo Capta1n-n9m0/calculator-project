@@ -2,8 +2,8 @@ package numerics;
 
 import java.io.Serializable;
 
-public class Coordinate implements Serializable {
-    private double x, y;
+public class Coordinate implements Serializable, Cloneable {
+    final private double x, y;
     public double getX() {
         return x;
     }
@@ -19,5 +19,8 @@ public class Coordinate implements Serializable {
         this.x = c.getX();
         this.y = c.getY();
     }
-
+    @Override
+    public Coordinate clone() throws CloneNotSupportedException {
+        return (Coordinate) super.clone();
+    }
 }

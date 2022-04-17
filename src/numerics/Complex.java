@@ -5,9 +5,9 @@ import calculator.ICalculable;
 
 import java.io.Serializable;
 
-public class Complex implements Serializable, ICalculable {
-    private Coordinate coordinate;
-    private Polar polar;
+public class Complex implements Serializable, ICalculable, Cloneable {
+    final private Coordinate coordinate;
+    final private Polar polar;
     public Coordinate getCoordinate() {
         return coordinate;
     }
@@ -61,5 +61,10 @@ public class Complex implements Serializable, ICalculable {
     @Override
     public String toString() {
         return String.format("{%s; %s}", CartesianRepresentation(), PolarRepresentation());
+    }
+
+    @Override
+    public Complex clone() throws CloneNotSupportedException {
+        return (Complex) super.clone();
     }
 }
