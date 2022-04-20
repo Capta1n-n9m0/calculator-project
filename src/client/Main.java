@@ -12,9 +12,9 @@ public class Main {
     public static void main(String[] args) throws Exception {
         // Tests
         // testArithmetics();
-        // testGUI();
+        testGUI();
         // testExpression();
-        testTokens();
+        //testTokens();
 
         //closing
         System.out.println("Done. Press Enter to close.");
