@@ -1,0 +1,3 @@
+[submodule "expressionparser"]
+	path = expressionparser
+	url = https://github.com/stefanhaustein/expressionparser.git
