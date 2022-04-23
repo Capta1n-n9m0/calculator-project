@@ -15,7 +15,7 @@ public class Keyboard extends JPanel {
             add("⇄");add("7");add("8");add("9");add("x");
             add("ż");add("4");add("5");add("6");add("-");
             add("π");add("1");add("2");add("3");add("+");
-            add("e");add(    "0"     );add(".");add("=");
+            add("e");add("i");add("0");add(".");add("=");
         }
     };
     public Keyboard(){
@@ -36,18 +36,18 @@ public class Keyboard extends JPanel {
             c.gridy = ref.counter / 5;
             c.weightx = 1;
             c.weighty = 1;
-            if(t.equals("0")) {
-                c.gridwidth = 2;
-                ref.counter++;
-            }
-            else c.gridwidth = 1;
+//            if(t.equals("0")) {
+//                c.gridwidth = 2;
+//                ref.counter++;
+//            }
+            //else c.gridwidth = 1;
             button.setFont(new Font("", Font.PLAIN, 20));
             button.setFocusPainted(false);
             button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             if("÷x-+=".contains(t)){
                 button.setBackground(new Color(227,156,51));
                 button.setForeground(Color.WHITE);
-            } else if("1234567890.".contains(t)){
+            } else if("1234567890.i".contains(t)){
                 button.setBackground(Color.GRAY);
                 button.setForeground(Color.WHITE);
             } else {
