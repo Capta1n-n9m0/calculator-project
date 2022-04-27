@@ -56,15 +56,11 @@ public class UserInterface extends JFrame implements KeyListener{
     public void keyPressed(KeyEvent e) {
         System.out.println(e.getKeyCode());
         if("1234567890.+-*/eip()c\n".contains(String.valueOf(e.getKeyChar()))) {
-            if (e.getKeyChar() == '\n'){
-                display.addText('=');
-                display.writeText();
-            } else if(e.getKeyChar() == 'c'){
-                display.cleanText();
-                display.writeText();
-            } else {
-                display.addText(e.getKeyChar());
-                display.writeText();
+            switch (e.getKeyChar()){
+                case '\n' -> display.addAndWriteText('=');
+                case 'c' -> display.cleanAndWriteText();
+                case 'p' -> display.addAndWriteText('π');
+                default -> display.addAndWriteText(e.getKeyChar());
             }
         } else if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
             display.removeLast();
