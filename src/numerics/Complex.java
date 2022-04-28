@@ -47,6 +47,32 @@ public class Complex implements Serializable, ICalculable, Cloneable {
         return new Complex(new Polar(polar.getRadius() / A.getRadius(), polar.getAngle() - A.getAngle()));
     }
 
+    public static Complex exp(Complex c){
+        Coordinate A = c.getCoordinate();
+        return new Complex(new Polar(Math.exp(A.getX()), A.getY()));
+    }
+
+    public static Complex ln(Complex c){
+        Polar A = c.getPolar();
+        return new Complex(new Coordinate(Math.log(A.getRadius()), A.getAngle()));
+    }
+
+    public Complex pow(Complex c){
+        // explanation
+        // exp(x) = e^x
+        // z1 = a + bi = r * exp(i*θ)
+        // z2 = c + di
+        // z1^z2 = (a + bi)^(c + di) = (r * exp(i*θ))^(c + di)
+        // z1^z2 = (r^c)*exp(-dθ)*exp(i*(d*ln(r) + c*θ))
+        // z1^z2 = radius * exp(i*angle)
+        // radius = (r^c)*exp(-dθ)
+        // angle = d*ln(r) + c*θ
+        Coordinate A = c.getCoordinate();
+        double radius = Math.pow(polar.getRadius(), A.getX()) * Math.exp(-1*A.getY()*polar.getAngle());
+        double angle = coordinate.getY()*Math.log(polar.getRadius()) + A.getX()*polar.getAngle();
+        return new Complex(new Polar(radius, angle));
+    }
+
     public Complex getValue() {
         return this;
     }
