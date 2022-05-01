@@ -10,4 +10,7 @@ public interface ICalculator extends Remote {
     public Result subtract(Complex c1, Complex c2) throws RemoteException;
     public Result multiply(Complex c1, Complex c2) throws RemoteException;
     public Result divide(Complex c1, Complex c2) throws RemoteException;
+    public Result pow(Complex c1, Complex c2) throws RemoteException;
+    public Result exp(Complex c) throws RemoteException;
+    public Result ln(Complex c) throws RemoteException;
 }

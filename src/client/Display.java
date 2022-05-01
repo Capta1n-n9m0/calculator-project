@@ -13,6 +13,7 @@ public class Display extends JPanel {
         GridBagConstraints c = new GridBagConstraints();
 
         expression = new JLabel();
+        expression.setFocusable(false);
         expression.setBackground(Color.BLACK);
         expression.setForeground(Color.WHITE);
         expression.setBorder(new LineBorder(new Color(45, 45, 45), 1, false));
@@ -25,6 +26,7 @@ public class Display extends JPanel {
         add(expression, c);
 
         result = new JLabel();
+        result.setFocusable(false);
         result.setBackground(Color.BLACK);
         result.setForeground(Color.WHITE);
         result.setBorder(new LineBorder(Color.BLACK, 0, false));

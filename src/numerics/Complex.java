@@ -73,6 +73,10 @@ public class Complex implements Serializable, ICalculable, Cloneable {
         return new Complex(new Polar(radius, angle));
     }
 
+    public Complex pow(double p){
+        return pow(new Complex(new Coordinate(p, 0)));
+    }
+
     public Complex getValue() {
         return this;
     }

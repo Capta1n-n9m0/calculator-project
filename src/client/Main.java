@@ -7,18 +7,19 @@ import numerics.*;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.LinkedList;
 
 public class Main {
     public static void main(String[] args) throws Exception {
         // Tests
         // testArithmetics();
-        testGUI();
+        //testGUI();
         // testExpression();
-        //testTokens();
+        testTokens();
 
         //closing
-        System.out.println("Done. Press Enter to close.");
-        System.in.read();
+        //System.out.println("Done. Press Enter to close.");
+        //System.in.read();
     }
     public static void testArithmetics() throws Exception {
         //testing arithmetics here
@@ -105,5 +106,8 @@ public class Main {
     public static void testTokens() throws Exception{
         String s1 = "1+2i+5+(12i-1/(3+2i))*2";
         System.out.println("s1 = " + s1);
+        Parser p = new Parser();
+        LinkedList<String> tokens =  p.tokenize(s1);
+        System.out.println(tokens);
     }
 }
