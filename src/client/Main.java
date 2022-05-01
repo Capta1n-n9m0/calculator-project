@@ -104,10 +104,22 @@ public class Main {
         System.out.println("r4 = " + r4);
     }
     public static void testTokens() throws Exception{
-        String s1 = "1+2i+5+(12i-1/(3+2i))*2";
+        String s1 = "1+2i+5+(12i-1/(3+2i))*2-i+2*(-i)";
+        ParserV2 p = new ParserV2();
+        for(var c : s1.toCharArray()){
+            p.addCharacter(c);
+            System.out.printf("%s%n", p.getAllTokens());
+        }
         System.out.println("s1 = " + s1);
-        Parser p = new Parser();
-        LinkedList<String> tokens =  p.tokenize(s1);
+        LinkedList<String> tokens =  p.getAllTokens();
         System.out.println(tokens);
+        for(var token: tokens){
+            try{
+                Complex test = Complex.fromString(token);
+                System.out.printf("%s = %s%n", token, test);
+            }catch (NumberFormatException e){
+                System.out.printf("%s is not complex%n", token);
+            }
+        }
     }
 }

@@ -31,8 +31,9 @@ public class Parser {
     public LinkedList<String> tokenize(String equation) throws Exception {
         LinkedList<String> temp = new LinkedList<>();
         StreamTokenizer tokenizer = new StreamTokenizer(new StringReader(equation));
-        tokenizer.ordinaryChar('-');
+        //tokenizer.ordinaryChar('-');
         tokenizer.ordinaryChar('/');
+        //tokenizer.ordinaryChar('i');
         tokenizer.ordinaryChar('÷');
         tokenizer.ordinaryChar('x');
         tokenizer.ordinaryChar('*');
