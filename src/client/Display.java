@@ -69,4 +69,9 @@ public class Display extends JPanel {
         cleanText();
         writeText();
     }
+
+    public void writeNewText(String s){
+        text = s;
+        writeText();
+    }
 }

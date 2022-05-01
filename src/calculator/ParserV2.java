@@ -20,6 +20,14 @@ public class ParserV2 {
         return temp;
     }
 
+    public String allTokensAsString(){
+        StringBuilder res = new StringBuilder();
+        LinkedList<String> temp = getAllTokens();
+        for(var token : temp){
+            res.append(token);
+        }
+        return res.toString();
+    }
 
     public String getCurrentToken(){
         return currentToken;
@@ -27,12 +35,19 @@ public class ParserV2 {
 
     public ParserV2(){}
 
+    public void replaceSequence(String s){
+        clearSequence();
+        for(char c : s.toCharArray()){
+            addCharacter(c);
+        }
+    }
+
     public void addCharacter(char c){
         inCurrentToken = true;
         String s = String.valueOf(c);
         if(operators.contains(s)){
             if("-".contains(s)){
-                //if the last token is operator
+                //if the last token is operator, then - belongs to a number
                 if(operators.contains(tokens.get(tokens.size()-1)) && currentToken.length() == 0){
                     currentToken += s;
                 }
@@ -74,5 +89,10 @@ public class ParserV2 {
             currentToken = tokens.removeLast();
         }
         currentToken = currentToken.substring(0, currentToken.length()-1);
+    }
+
+    public void clearSequence(){
+        currentToken = "";
+        tokens.clear();
     }
 }
