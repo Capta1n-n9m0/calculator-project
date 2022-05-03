@@ -8,9 +8,11 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Arrays;
+import java.util.Locale;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+        Locale.setDefault(Locale.US);
         System.out.println("Launching the server.");
         Registry registry = LocateRegistry.createRegistry(Constants.PORT);
         ICalculator stub = (ICalculator) UnicastRemoteObject.exportObject(new Calculator(), Constants.PORT);

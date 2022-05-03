@@ -9,9 +9,11 @@ import java.awt.event.KeyEvent;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.LinkedList;
+import java.util.Locale;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+        Locale.setDefault(Locale.US);
         // Tests
         // testArithmetics();
         // testGUI();
