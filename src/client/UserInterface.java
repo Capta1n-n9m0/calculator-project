@@ -1,6 +1,5 @@
 package client;
 
-import calculator.Parser;
 import calculator.ParserV2;
 
 import javax.swing.*;

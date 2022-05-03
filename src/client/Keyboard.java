@@ -12,12 +12,12 @@ import java.util.ArrayList;
 public class Keyboard extends JPanel {
     private final ArrayList<String> buttons = new ArrayList<String>(){
         {
-            add("(");add(")");add("C");add("⌫");add("÷");
-            add("⇄");add("7");add("8");add("9");add("x");
+            add("⇄");add("C");add("⌫");add("÷");
+            add("7");add("8");add("9");add("x");
             //add("ż");add("4");add("5");add("6");add("-");
-            add("π");add("4");add("5");add("6");add("-");
-            add("e");add("1");add("2");add("3");add("+");
-            add("i");add("0");add(".");add("=");
+            add("4");add("5");add("6");add("-");
+            add("1");add("2");add("3");add("+");
+            add("0");add(".");add("=");
         }
     };
     ActionListener listener;
@@ -38,8 +38,8 @@ public class Keyboard extends JPanel {
             button.setBorder(new RoundedBorder(Color.BLACK, 2,20));
             c.fill = GridBagConstraints.BOTH;
             //c.insets = new Insets(1, 1, 1, 1);
-            c.gridx = ref.counter % 5;
-            c.gridy = ref.counter / 5;
+            c.gridx = ref.counter % 4;
+            c.gridy = ref.counter / 4;
             c.weightx = 1;
             c.weighty = 1;
             if(t.equals("0")) {

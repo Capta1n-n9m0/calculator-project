@@ -16,5 +16,15 @@ public class Constants {
     final public static Complex I_COMPLEX = new Complex(new Coordinate(0, 1));
     final public static Complex E_COMPLEX = new Complex(new Coordinate(Math.E, 0));
     final public static Complex PI_COMPLEX = new Complex(new Coordinate(Math.PI, 0));
-
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
 }

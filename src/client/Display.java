@@ -7,7 +7,11 @@ import java.awt.event.KeyListener;
 
 public class Display extends JPanel {
     private JLabel expression, result;
-    private String text = "";
+    private String text = "0";
+    private String expressionText = "<html><nobr><font style=\"color:white;\">(0 + 0i)</font><font style=\"color:gray;\"> + (0 + 0i)</font></nobr></html>";
+    private String activeText = "0 + 0i";
+    private final static String defaultExpressionText = "(0 + 0i) + (0 + 0i)";
+    private final static String defaultActiveText = "0 + 0i";
     public Display(){
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -37,10 +41,11 @@ public class Display extends JPanel {
         c.weighty = 0.65; c.weightx = 1;
         add(result, c);
         writeText();
+
     }
     public void writeText(){
-        result.setText(text);
-        expression.setText(text);
+        result.setText(activeText);
+        expression.setText(expressionText);
     }
     public void setText(String s){
         text = new String(s);

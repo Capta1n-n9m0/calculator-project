@@ -2,7 +2,6 @@ package numerics;
 
 
 import calculator.ICalculable;
-import calculator.Parser;
 import constants.Constants;
 
 import java.io.Serializable;
@@ -73,10 +72,10 @@ public class Complex implements Serializable, ICalculable, Cloneable {
         }
         if(s.charAt(0) == 'i') result = new Complex(Constants.I_COMPLEX);
         else {
-            if (Parser.isNumeric(s)) {
+            if (Constants.isNumeric(s)) {
                 result = new Complex(new Coordinate(Double.parseDouble(s), 0));
             } else if (s.charAt(s.length() - 1) == 'i') {
-                if (Parser.isNumeric(s.substring(0, s.length() - 1))) {
+                if (Constants.isNumeric(s.substring(0, s.length() - 1))) {
                     result = new Complex(new Coordinate(0, Double.parseDouble(s.substring(0, s.length() - 1))));
                 } else throw new NumberFormatException(String.format("%s does not contain complex number", s));
             } else throw new NumberFormatException(String.format("%s does not contain complex number", s));
