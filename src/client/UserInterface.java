@@ -1,6 +1,7 @@
 package client;
 
 import calculator.ParserV2;
+import calculator.ParserV3;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,7 @@ public class UserInterface extends JFrame implements KeyListener, ActionListener
     public static final int WIDTH = 400;
     public static final int HEIGHT = 600;
     private Display display;
-    ParserV2 parser = new ParserV2();
+    ParserV3 parser = new ParserV3();
     private Keyboard keyboard;
     public UserInterface(){
         super();
@@ -53,7 +54,6 @@ public class UserInterface extends JFrame implements KeyListener, ActionListener
         setLocationRelativeTo(null);
         setVisible(true);
     }
-
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -61,7 +61,6 @@ public class UserInterface extends JFrame implements KeyListener, ActionListener
 
     private void inputProcessor(char c){
         int c_code = (int) c;
-        System.out.println(c_code);
         if("1234567890.+-*x/eip()cπ⇄C=÷\n".contains(String.valueOf(c))) {
             switch (c){
                 case 'x', '*' -> parser.addCharacter('x');
@@ -78,7 +77,7 @@ public class UserInterface extends JFrame implements KeyListener, ActionListener
             case 9 -> parser.addCharacter('⇄');
         }
         display.writeNewText(parser.allTokensAsString());
-        System.out.println(parser.allTokensAsString());
+        System.out.println(parser.getAllTokens());
     }
 
     @Override

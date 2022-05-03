@@ -44,7 +44,7 @@ public class Display extends JPanel {
 
     }
     public void writeText(){
-        result.setText(activeText);
+        result.setText(text);
         expression.setText(expressionText);
     }
     public void setText(String s){

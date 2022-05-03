@@ -14,7 +14,6 @@ public class Keyboard extends JPanel {
         {
             add("⇄");add("C");add("⌫");add("÷");
             add("7");add("8");add("9");add("x");
-            //add("ż");add("4");add("5");add("6");add("-");
             add("4");add("5");add("6");add("-");
             add("1");add("2");add("3");add("+");
             add("0");add(".");add("=");

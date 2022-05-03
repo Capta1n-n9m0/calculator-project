@@ -27,4 +27,32 @@ public class Constants {
         }
         return true;
     }
+
+    public static boolean isDigit(char c){
+        switch (c){
+            case '1': case '2': case '3': case '4': case '5':
+            case '6': case '7': case '8': case '9': case '0':
+                return true;
+            default:
+                return false;
+        }
+    }
+    public static boolean isDigit(String s){
+        if(s.isBlank()) return false;
+        return isDigit(s.charAt(0));
+    }
+    public static boolean isOperator(char c){
+        switch (c){
+            case '+': case '-':
+            case '*': case 'x': case '/': case '÷':
+                return true;
+            default:
+                return false;
+        }
+    }
+    public static boolean isOperator(String s){
+        if(s.isBlank()) return false;
+        return isOperator(s.charAt(0));
+    }
+
 }
