@@ -21,4 +21,7 @@ public class ParserV2 {
     public String allTokensAsString(){
         return "";
     }
+    public LinkedList<String> getAllTokens(){
+        return new LinkedList<>();
+    }
 }
