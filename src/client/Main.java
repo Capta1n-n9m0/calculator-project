@@ -5,6 +5,7 @@ import constants.Constants;
 import numerics.*;
 
 
+import java.awt.event.KeyEvent;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.LinkedList;
@@ -13,9 +14,11 @@ public class Main {
     public static void main(String[] args) throws Exception {
         // Tests
         // testArithmetics();
-        testGUI();
+        // testGUI();
         // testExpression();
-        //testTokens();
+        // testTokens();
+
+        runApplication();
 
         //closing
         //System.out.println("Done. Press Enter to close.");
@@ -60,6 +63,10 @@ public class Main {
     }
     public static void testGUI() throws Exception{
         UserInterface UI = new UserInterface();
+        String input = "6+8i/3+4i";
+        for(char c : input.toCharArray()){
+            UI.inputProcessor(c);
+        }
     }
     public static void testExpression() throws Exception{
         System.out.println("Creating testing data.");
@@ -80,15 +87,15 @@ public class Main {
         //c1 + (c2 + c3)*c1
         Result r1 = (
                 new Expression(
-                c1, Operation.ADD, new Expression(
+                c1, new Expression(
                         new Expression(
-                                c2, Operation.ADD, c3
-                        ), Operation.MULTIPLY, c1)
+                                c2, c3, Operation.ADD
+                        ), c1, Operation.MULTIPLY), Operation.ADD
                 )
             ).Calculate();
-        Result r2 = (new Expression(r1.getAnswer(), Operation.MULTIPLY, c0)).Calculate();
+        Result r2 = (new Expression(r1.getAnswer(), c0, Operation.MULTIPLY)).Calculate();
         System.out.println("c0 = " + c0);
-        Result r3 = (new Expression(r1.getAnswer(), Operation.DIVIDE, c0)).Calculate();
+        Result r3 = (new Expression(r1.getAnswer(), c0, Operation.DIVIDE)).Calculate();
         Result r4 = new Expression(c1)
                 .setOperation(Operation.ADD)
                 .setValue2(new Expression(new Expression()
@@ -121,5 +128,8 @@ public class Main {
                 System.out.printf("%s is not complex%n", token);
             }
         }
+    }
+    public static void runApplication() throws Exception{
+        UserInterface UI = new UserInterface();
     }
 }

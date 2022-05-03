@@ -30,12 +30,12 @@ public class Expression implements ICalculable {
         initialiseCalculator();
         this.value1 = c;
     }
-    public Expression(ICalculable c, Operation o) throws Exception{
+    public Expression(ICalculable c1, Operation o) throws Exception{
         initialiseCalculator();
-        this.value1 = c;
+        this.value1 = c1;
         this.operation = o;
     }
-    public Expression(ICalculable c1, Operation o, ICalculable c2) throws Exception{
+    public Expression(ICalculable c1, ICalculable c2, Operation o) throws Exception{
         initialiseCalculator();
         this.value1 = c1;
         this.operation = o;
@@ -55,7 +55,9 @@ public class Expression implements ICalculable {
             if(operation == null){
                 return calculator.add(value1.getValue(), Constants.ZERO_COMPLEX.getValue());
             }else {
-                value2 = value1;
+                if (value2 == null) {
+                    value2 = value1;
+                }
             }
         }
         switch (this.operation){
@@ -99,5 +101,17 @@ public class Expression implements ICalculable {
         this.result = null;
         this.operation = operation;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        String op = null;
+        switch (operation){
+            case ADD -> op = "+";
+            case SUBTRACT -> op = "-";
+            case DIVIDE -> op = "/";
+            case MULTIPLY -> op = "*";
+        }
+        return String.format("(%s %s %s)%n", value1, op, value2);
     }
 }

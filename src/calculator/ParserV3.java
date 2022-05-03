@@ -2,8 +2,10 @@ package calculator;
 
 import constants.Constants;
 import numerics.Complex;
+import numerics.Coordinate;
+import numerics.Expression;
+import numerics.Operation;
 
-import java.util.Currency;
 import java.util.LinkedList;
 
 public class ParserV3 {
@@ -30,57 +32,120 @@ public class ParserV3 {
         return res.toString();
     }
 
-    public Complex evaluate(){
-        return Constants.ZERO_COMPLEX;
+    public Complex evaluate() throws Exception {
+        completeSequence();
+
+        Complex a = Complex.fromString(tokens.get(0).toString());
+        Complex b = Complex.fromString(tokens.get(2).toString());
+        Complex c = Complex.fromString(tokens.get(4).toString());
+        Complex d = Complex.fromString(tokens.get(6).toString());
+
+        System.out.println(a);
+        System.out.println(b);
+        System.out.println(c);
+        System.out.println(d);
+
+        Operation opA_B, opC_D, opC1_C2;
+        switch (tokens.get(1).toString().charAt(0)){
+            case '+' -> opA_B = Operation.ADD;
+            case '-' -> opA_B = Operation.SUBTRACT;
+            default -> throw new IllegalStateException("Unexpected value: " + tokens.get(1).toString().charAt(0));
+        }
+        Expression c1 = new Expression(a, b, opA_B);
+        System.out.println(c1);
+        switch (tokens.get(5).toString().charAt(0)){
+            case '+' -> opC_D = Operation.ADD;
+            case '-' -> opC_D = Operation.SUBTRACT;
+            default -> throw new IllegalStateException("Unexpected value: " + tokens.get(5).toString().charAt(5));
+        }
+        Expression c2 = new Expression(c, d, opC_D);
+        System.out.println(c2);
+        switch (tokens.get(3).toString().charAt(0)){
+            case '+' -> opC1_C2 = Operation.ADD;
+            case '-' -> opC1_C2 = Operation.SUBTRACT;
+            case 'x', '*' -> opC1_C2 = Operation.MULTIPLY;
+            case '/', '÷' -> opC1_C2 = Operation.DIVIDE;
+            default -> throw new IllegalStateException("Unexpected value: " + tokens.get(3).toString().charAt(0));
+        }
+        Expression whole_expression = new Expression(c1, c2, opC1_C2);
+        System.out.println(whole_expression);
+        Result calculation_response = whole_expression.Calculate();
+        System.out.println(calculation_response);
+        Complex result = whole_expression.getValue();
+        System.out.println(result);
+        clearSequence();
+        for(char character : result.CartesianRepresentation().toCharArray()){
+            addCharacter(character);
+        }
+        return result;
     }
 
-    public void addCharacter(char c){
-        System.out.println("Called addChar: " + c);
-        switch (tokens.size()){
-            //tokens: (1 2 3) 4 (5 6 7) 8
-            // sizes: (0 1 2) 3 (4 5 6) 7
-            // writing 1st token or writing 5th token
-            case 0, 4 ->{
-                System.out.println("case 0");
-                switch (currentToken.length()){
-                    case 0 ->{
-                        if(c == '-'){
-                            currentToken.append(c);
-                        }else if(Constants.isDigit(c)){
-                            currentToken.append(c);
-                        }else if(c == '.'){
-                            currentToken.append('0');
-                            currentToken.append(c);
-                        }else if (c == '+'){
-                            currentToken.append('0');
-                            tokens.add(currentToken);
-                            currentToken = new StringBuilder();
-                            currentToken.append(c);
-                            tokens.add(currentToken);
-                            currentToken = new StringBuilder();
-                        }
-                    }
-                    case 1 ->{
-                        if(currentToken.charAt(0) == '-'){
-                            if(Constants.isDigit(c)){
+    public void addCharacter(char c) throws Exception {
+        if(c == '=') evaluate();
+        else {
+            switch (tokens.size()) {
+                //tokens: (1 2 3) 4 (5 6 7) 8
+                // sizes: (0 1 2) 3 (4 5 6) 7
+                // writing 1st token or writing 5th token
+                case 0, 4 -> {
+                    switch (currentToken.length()) {
+                        case 0 -> {
+                            if (c == '-') {
                                 currentToken.append(c);
-                            }else if(c == '.'){
+                            } else if (Constants.isDigit(c)) {
+                                currentToken.append(c);
+                            } else if (c == '.') {
                                 currentToken.append('0');
                                 currentToken.append(c);
-                            }else if(c == '-' || c == '+'){
-                                currentToken.append('1');
+                            } else if (c == '+') {
+                                currentToken.append('0');
                                 tokens.add(currentToken);
                                 currentToken = new StringBuilder();
                                 currentToken.append(c);
                                 tokens.add(currentToken);
                                 currentToken = new StringBuilder();
                             }
-                        }else {
-                            if(Constants.isDigit(c)){
+                        }
+                        case 1 -> {
+                            if (currentToken.charAt(0) == '-') {
+                                if (Constants.isDigit(c)) {
+                                    currentToken.append(c);
+                                } else if (c == '.') {
+                                    currentToken.append('0');
+                                    currentToken.append(c);
+                                } else if (c == '-' || c == '+') {
+                                    currentToken.append('1');
+                                    tokens.add(currentToken);
+                                    currentToken = new StringBuilder();
+                                    currentToken.append(c);
+                                    tokens.add(currentToken);
+                                    currentToken = new StringBuilder();
+                                }
+                            } else {
+                                if (Constants.isDigit(c)) {
+                                    currentToken.append(c);
+                                } else if (c == '.') {
+                                    currentToken.append(c);
+                                } else if (c == '-' || c == '+') {
+                                    tokens.add(currentToken);
+                                    currentToken = new StringBuilder();
+                                    currentToken.append(c);
+                                    tokens.add(currentToken);
+                                    currentToken = new StringBuilder();
+                                }
+                            }
+                        }
+                        default -> {
+                            if (Constants.isDigit(c)) {
                                 currentToken.append(c);
-                            }else if(c == '.'){
-                                currentToken.append(c);
-                            } else if(c == '-' || c == '+') {
+                            } else if (c == '.') {
+                                if (!currentToken.toString().contains(".")) {
+                                    currentToken.append(c);
+                                }
+                            } else if (c == '-' || c == '+') {
+                                if (currentToken.charAt(currentToken.length() - 1) == '.') {
+                                    currentToken.append('0');
+                                }
                                 tokens.add(currentToken);
                                 currentToken = new StringBuilder();
                                 currentToken.append(c);
@@ -89,153 +154,145 @@ public class ParserV3 {
                             }
                         }
                     }
-                    default ->{
-                        if(Constants.isDigit(c)){
+                }
+                // writing 2nd token or writing 6th token
+                case 1, 5 -> {
+                    if (!currentToken.isEmpty()) {
+                        tokens.add(currentToken);
+                        currentToken = new StringBuilder();
+                        addCharacter(c);
+                    }
+                    if (c == '+' || c == '-') {
+                        currentToken.append(c);
+                        tokens.add(currentToken);
+                        currentToken = new StringBuilder();
+                    }
+                }
+                // writing 3rd token
+                case 2 -> {
+                    if (currentToken.isEmpty()) {
+                        if (Constants.isDigit(c)) {
                             currentToken.append(c);
-                        }else if(c == '.'){
-                            if(!currentToken.toString().contains(".")){
-                                currentToken.append(c);
+                        } else if (c == '.') {
+                            currentToken.append('0');
+                            currentToken.append(c);
+                        } else if (c == 'i') {
+                            currentToken.append(c);
+                            tokens.add(currentToken);
+                            currentToken = new StringBuilder();
+                        } else if (Constants.isOperator(c)) {
+                            currentToken.append('0');
+                            currentToken.append('i');
+                            tokens.add(currentToken);
+                            currentToken = new StringBuilder();
+                            currentToken.append(c);
+                            tokens.add(currentToken);
+                            currentToken = new StringBuilder();
+                        }
+                    } else {
+                        if (Constants.isDigit(c)) {
+                            currentToken.append(c);
+                        } else if (c == '.') {
+                            if (!currentToken.toString().contains(String.valueOf(c))) {
+                                currentToken.append('.');
                             }
-                        }else if(c == '-' || c == '+'){
-                            if(currentToken.charAt(currentToken.length()-1) == '.'){
+                        } else if (c == 'i') {
+                            if (currentToken.charAt(currentToken.length() - 1) == '.')
+                                currentToken.append('0');
+                            currentToken.append('i');
+                            tokens.add(currentToken);
+                            currentToken = new StringBuilder();
+                        } else if (Constants.isOperator(c)) {
+                            if (currentToken.charAt(currentToken.length() - 1) == '.')
+                                currentToken.append('0');
+                            if (currentToken.charAt(currentToken.length() - 1) != 'i')
+                                currentToken.append('i');
+                            tokens.add(currentToken);
+                            currentToken = new StringBuilder();
+                            currentToken.append(c);
+                            tokens.add(currentToken);
+                            currentToken = new StringBuilder();
+                        }
+                    }
+                }
+                // writing 4th token
+                case 3 -> {
+                    if (!currentToken.isEmpty()) {
+                        tokens.add(currentToken);
+                        currentToken = new StringBuilder();
+                        addCharacter(c);
+                    }
+                    if (Constants.isOperator(c)) {
+                        currentToken.append(c);
+                        tokens.add(currentToken);
+                        currentToken = new StringBuilder();
+                    }
+                }
+                // writing 5th token
+                // case 4: same as case 0. Writing 5th token is same as writing 1st token
+                // writing 6th token
+                // case 5: same as case 1. Writing 6th toke is same as writing 2nd token
+                // writing 7th token
+                case 6 -> {
+                    if (currentToken.isEmpty()) {
+                        if (Constants.isDigit(c)) {
+                            currentToken.append(c);
+                        } else if (c == '.') {
+                            currentToken.append('0');
+                            currentToken.append(c);
+                        } else if (c == 'i') {
+                            currentToken.append(c);
+                            tokens.add(currentToken);
+                            currentToken = new StringBuilder();
+                            evaluate();
+                        } else if (Constants.isOperator(c) || c == '=') {
+                            currentToken.append('0');
+                            currentToken.append('i');
+                            tokens.add(currentToken);
+                            currentToken = new StringBuilder();
+                            currentToken.append(c);
+                            tokens.add(currentToken);
+                            currentToken = new StringBuilder();
+                            evaluate();
+                        }
+                    } else {
+                        if (Constants.isDigit(c)) {
+                            currentToken.append(c);
+                        } else if (c == '.') {
+                            if (!currentToken.toString().contains(String.valueOf(c))) {
+                                currentToken.append('.');
+                            }
+                        } else if (c == 'i') {
+                            if (currentToken.charAt(currentToken.length() - 1) == '.') {
                                 currentToken.append('0');
                             }
+                            currentToken.append(c);
+                            tokens.add(currentToken);
+                            currentToken = new StringBuilder();
+                            evaluate();
+                        } else if (Constants.isOperator(c) || c == '=') {
+                            if (currentToken.charAt(currentToken.length() - 1) == '.') {
+                                currentToken.append('0');
+                            }
+                            if (currentToken.charAt(currentToken.length() - 1) != 'i')
+                                currentToken.append('i');
                             tokens.add(currentToken);
                             currentToken = new StringBuilder();
                             currentToken.append(c);
                             tokens.add(currentToken);
                             currentToken = new StringBuilder();
+                            evaluate();
                         }
                     }
                 }
-            }
-            // writing 2nd token or writing 6th token
-            case 1, 5 ->{
-                if(c == '+' || c == '-'){
-                    currentToken.append(c);
-                    tokens.add(currentToken);
-                    currentToken = new StringBuilder();
-                }
-            }
-            // writing 3rd token
-            case 2 ->{
-                if(currentToken.isEmpty()){
-                    if(Constants.isDigit(c)){
-                        currentToken.append(c);
-                    }else if(c == '.'){
-                        currentToken.append('0');
-                        currentToken.append(c);
-                    }else if(c == 'i'){
-                        currentToken.append(c);
-                        tokens.add(currentToken);
-                        currentToken = new StringBuilder();
-                    }else if(Constants.isOperator(c)){
-                        currentToken.append('0');
-                        currentToken.append('i');
-                        tokens.add(currentToken);
-                        currentToken = new StringBuilder();
-                        currentToken.append(c);
-                        tokens.add(currentToken);
-                        currentToken = new StringBuilder();
-                    }
-                }else {
-                    if(Constants.isDigit(c)){
-                        currentToken.append(c);
-                    }else if(c == '.') {
-                        if(!currentToken.toString().contains(String.valueOf(c))){
-                           currentToken.append('.');
-                        }
-                    }else if(c == 'i'){
-                        if(currentToken.charAt(currentToken.length()-1) == '.'){
-                            currentToken.append('0');
-                        }
-                        currentToken.append('i');
-                        tokens.add(currentToken);
-                        currentToken = new StringBuilder();
-                    }else if(Constants.isOperator(c)){
-                        if(currentToken.charAt(currentToken.length()-1) == '.'){
-                            currentToken.append('0');
-                        }
-                        currentToken.append('i');
-                        tokens.add(currentToken);
-                        currentToken = new StringBuilder();
-                        currentToken.append(c);
-                        tokens.add(currentToken);
-                        currentToken =  new StringBuilder();
-                    }
-                }
-            }
-            // writing 4th token
-            case 3 ->{
-                if(Constants.isOperator(c)){
-                    currentToken.append(c);
-                    tokens.add(currentToken);
-                    currentToken = new StringBuilder();
-                }
-            }
-            // writing 5th token
-            // case 4: same as case 0. Writing 5th token is same as writing 1st token
-            // writing 6th token
-            // case 5: same as case 1. Writing 6th toke is same as writing 2nd token
-            // writing 7th token
-            case 6 ->{
-                if(currentToken.isEmpty()){
-                    if(Constants.isDigit(c)){
-                        currentToken.append(c);
-                    }else if(c == '.'){
-                        currentToken.append('0');
-                        currentToken.append(c);
-                    }else if(c == 'i'){
-                        currentToken.append(c);
-                        tokens.add(currentToken);
-                        currentToken = new StringBuilder();
-                        evaluate();
-                    }else if(Constants.isOperator(c) || c == '='){
-                        currentToken.append('0');
-                        currentToken.append('i');
-                        tokens.add(currentToken);
-                        currentToken = new StringBuilder();
+                // equal sign, or
+                case 7 -> {
+                    if (Constants.isOperator(c) || c == '=') {
                         currentToken.append(c);
                         tokens.add(currentToken);
                         currentToken = new StringBuilder();
                         evaluate();
                     }
-                }else {
-                    if(Constants.isDigit(c)){
-                        currentToken.append(c);
-                    }else if(c == '.') {
-                        if(!currentToken.toString().contains(String.valueOf(c))){
-                            currentToken.append('.');
-                        }
-                    }else if(c == 'i'){
-                        if(currentToken.charAt(currentToken.length()-1) == '.'){
-                            currentToken.append('0');
-                        }
-                        currentToken.append(c);
-                        tokens.add(currentToken);
-                        currentToken = new StringBuilder();
-                        evaluate();
-                    }else if(Constants.isOperator(c) || c == '='){
-                        if(currentToken.charAt(currentToken.length()-1) == '.'){
-                            currentToken.append('0');
-                        }
-                        currentToken.append('i');
-                        tokens.add(currentToken);
-                        currentToken = new StringBuilder();
-                        currentToken.append(c);
-                        tokens.add(currentToken);
-                        currentToken = new StringBuilder();
-                        evaluate();
-                    }
-                }
-            }
-            // equal sign, or
-            case 7 ->{
-                if(Constants.isOperator(c) || c == '='){
-                    currentToken.append(c);
-                    tokens.add(currentToken);
-                    currentToken = new StringBuilder();
-                    evaluate();
                 }
             }
         }
@@ -298,6 +355,11 @@ public class ParserV3 {
                 removeLastCharacter();
             }
         }else currentToken.deleteCharAt(currentToken.length()-1);
+        if(currentToken.isEmpty()){
+            if(!tokens.isEmpty()){
+                currentToken = tokens.removeLast();
+            }
+        }
     }
 
 

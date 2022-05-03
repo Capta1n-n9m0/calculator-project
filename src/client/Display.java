@@ -3,15 +3,13 @@ package client;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.KeyListener;
+import java.util.LinkedList;
 
 public class Display extends JPanel {
-    private JLabel expression, result;
+    private JLabel expression, value;
     private String text = "0";
-    private String expressionText = "<html><nobr><font style=\"color:white;\">(0 + 0i)</font><font style=\"color:gray;\"> + (0 + 0i)</font></nobr></html>";
-    private String activeText = "0 + 0i";
-    private final static String defaultExpressionText = "(0 + 0i) + (0 + 0i)";
-    private final static String defaultActiveText = "0 + 0i";
+    private StringBuilder expressionText = new StringBuilder();
+    private StringBuilder valueText = new StringBuilder();
     public Display(){
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -29,23 +27,80 @@ public class Display extends JPanel {
         c.weighty = 0.35; c.weightx = 1;
         add(expression, c);
 
-        result = new JLabel();
-        result.setFocusable(false);
-        result.setBackground(Color.BLACK);
-        result.setForeground(Color.WHITE);
-        result.setBorder(new LineBorder(Color.BLACK, 0, false));
-        result.setFont(new Font("Calibri", Font.BOLD, 50));
-        result.setHorizontalAlignment(SwingConstants.RIGHT);
+        value = new JLabel();
+        value.setFocusable(false);
+        value.setBackground(Color.BLACK);
+        value.setForeground(Color.WHITE);
+        value.setBorder(new LineBorder(Color.BLACK, 0, false));
+        value.setFont(new Font("Calibri", Font.BOLD, 50));
+        value.setHorizontalAlignment(SwingConstants.RIGHT);
         c.fill = GridBagConstraints.BOTH;
         c.gridy = 1; c.gridx = 0;
         c.weighty = 0.65; c.weightx = 1;
-        add(result, c);
-        writeText();
-
+        add(value, c);
+        sendTokens(new LinkedList<>());
     }
+
+    public void sendExpression(LinkedList<String> tokens){
+        expressionText.delete(0, expressionText.length());
+        expressionText.append("<html>");
+        for(int i = 0; i < 8; i++){
+            if (i == 0 || i == 4) expressionText.append('(');
+            if(i < tokens.size()){
+                expressionText.append("<font style=\"color:white;\">");
+                expressionText.append(tokens.get(i));
+                expressionText.append("</font>");
+            }else {
+                expressionText.append("<font style=\"color:gray;\">");
+                switch (i){
+                    case 0, 4 -> expressionText.append("0.0");
+                    case 1, 3, 5 -> expressionText.append("+");
+                    case 2, 6 -> expressionText.append("0.0i");
+                    case 7 -> expressionText.append("=");
+                }
+                expressionText.append("</font>");
+            }
+            if(i == 2 || i == 6) expressionText.append(')');
+        }
+        text = expressionText.toString();
+        expressionText.append("</html>");
+        expression.setText(expressionText.toString());
+    }
+    public void sendValue(LinkedList<String> tokens){
+        valueText.delete(0, valueText.length());
+        valueText.append("<html>");
+        valueText.append("(");
+        for(int i = 0; i < 3; i++){
+            if(i < tokens.size()){
+                valueText.append("<font style=\"color:white;\">");
+                valueText.append(tokens.get(i));
+                valueText.append("</font>");
+            } else {
+                valueText.append("<font style=\"color:gray;\">");
+                switch (i){
+                    case 0 -> valueText.append("0.0");
+                    case 1 -> valueText.append("+");
+                    case 2 -> valueText.append("0.0i");
+                }
+                valueText.append("</font>");
+            }
+        }
+        valueText.append(")");
+        valueText.append("</html>");
+        value.setText(valueText.toString());
+    }
+    public void sendTokens(LinkedList<String> tokens){
+        sendExpression(tokens);
+        if(tokens.size() < 5){
+            sendValue(new LinkedList<>(tokens.subList(0, tokens.size())));
+        }else {
+            sendValue(new LinkedList<>(tokens.subList(4, tokens.size())));
+        }
+    }
+
     public void writeText(){
-        result.setText(text);
-        expression.setText(expressionText);
+        value.setText(text);
+        expression.setText(text);
     }
     public void setText(String s){
         text = new String(s);

@@ -1,5 +1,6 @@
 package client;
 
+import calculator.ICalculator;
 import calculator.ParserV2;
 import calculator.ParserV3;
 
@@ -59,10 +60,11 @@ public class UserInterface extends JFrame implements KeyListener, ActionListener
 
     }
 
-    private void inputProcessor(char c){
+    public void inputProcessor(char c) throws Exception {
         int c_code = (int) c;
         if("1234567890.+-*x/eip()cπ⇄C=÷\n".contains(String.valueOf(c))) {
-            switch (c){
+            System.out.println((int) c);
+            switch (c_code){
                 case 'x', '*' -> parser.addCharacter('x');
                 case '÷', '/' -> parser.addCharacter('÷');
                 case '\n', '=' -> parser.addCharacter('=');
@@ -76,13 +78,18 @@ public class UserInterface extends JFrame implements KeyListener, ActionListener
         switch (c_code){
             case 9 -> parser.addCharacter('⇄');
         }
-        display.writeNewText(parser.allTokensAsString());
+        display.sendTokens(parser.getAllTokens());
+        //display.writeNewText(parser.allTokensAsString());
         System.out.println(parser.getAllTokens());
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        inputProcessor(e.getKeyChar());
+        try {
+            inputProcessor(e.getKeyChar());
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @Override
@@ -94,6 +101,10 @@ public class UserInterface extends JFrame implements KeyListener, ActionListener
     public void actionPerformed(ActionEvent e) {
         String s = e.getActionCommand();
         System.out.println(s);
-        inputProcessor(s.charAt(0));
+        try {
+            inputProcessor(s.charAt(0));
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }
