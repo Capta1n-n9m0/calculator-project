@@ -108,7 +108,7 @@ public class Complex implements Serializable, ICalculable, Cloneable {
     }
 
     public String CartesianRepresentation(){
-        return String.format("%g + %g*i", coordinate.getX(), coordinate.getY());
+        return String.format("%g+%g*i", coordinate.getX(), coordinate.getY());
     }
     public String PolarRepresentation(){
         return String.format("%g*exp(%g*i)", polar.getRadius(), polar.getAngle());
