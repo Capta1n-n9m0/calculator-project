@@ -325,6 +325,9 @@ public class ParserV3 {
                         currentToken.append('0');
                         currentToken.append('i');
                     }
+                    if(currentToken.charAt(currentToken.length()-1) != 'i'){
+                        currentToken.append('i');
+                    }
                 }
             }
             case 7 ->{
