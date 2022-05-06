@@ -2,6 +2,8 @@ package numerics;
 
 
 import calculator.ICalculable;
+import calculator.Result;
+import calculator.StatusCode;
 import constants.Constants;
 
 import java.io.Serializable;
@@ -103,8 +105,8 @@ public class Complex implements Serializable, ICalculable, Cloneable {
         return pow(new Complex(new Coordinate(p, 0)));
     }
 
-    public Complex getValue() {
-        return this;
+    public Result getValue() {
+        return new Result(this, StatusCode.OK);
     }
 
     public String CartesianRepresentation(){

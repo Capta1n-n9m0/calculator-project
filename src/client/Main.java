@@ -16,7 +16,7 @@ public class Main {
         Locale.setDefault(Locale.US);
         // Tests
         // testArithmetics();
-        // testGUI();
+        //testGUI();
         // testExpression();
         // testTokens();
 
@@ -44,10 +44,10 @@ public class Main {
         System.out.println("c3 = " + c3);
 
         System.out.println("Running tests.");
-        Result res1 = stub.add(c1, c2);
-        Result res2 = stub.multiply(c1, c2);
-        Result res3 = stub.divide(c1, c3);
-        Result res4 = stub.subtract(c3, c2);
+        Result res1 = stub.add(new Result(c1), new Result(c2));
+        Result res2 = stub.multiply(new Result(c1), new Result(c2));
+        Result res3 = stub.divide(new Result(c1), new Result(c3));
+        Result res4 = stub.subtract(new Result(c3), new Result(c2));
 
         System.out.println("Showing results.");
         if(res1.isOk()){
@@ -65,7 +65,7 @@ public class Main {
     }
     public static void testGUI() throws Exception{
         UserInterface UI = new UserInterface();
-        String input = "6+8i/3+4i";
+        String input = "6+8i/0+0=";
         for(char c : input.toCharArray()){
             UI.inputProcessor(c);
         }

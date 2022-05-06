@@ -67,9 +67,9 @@ public class UserInterface extends JFrame implements KeyListener, ActionListener
             switch (c_code){
                 case 'x', '*' -> parser.addCharacter('x');
                 case '÷', '/' -> parser.addCharacter('÷');
-                case '\n', '=' -> parser.addCharacter('=');
                 case 'c', 'C' -> parser.clearSequence();
                 case 'p' -> parser.addCharacter('π');
+                case '\n', '=' -> parser.addCharacter('=');
                 default -> parser.addCharacter(c);
             }
         } else if(c == KeyEvent.VK_BACK_SPACE || c == '⌫') {
@@ -78,7 +78,8 @@ public class UserInterface extends JFrame implements KeyListener, ActionListener
         switch (c_code){
             case 9 -> parser.addCharacter('⇄');
         }
-        display.sendTokens(parser.getAllTokens());
+        //display.sendTokens(parser.getAllTokens());
+        display.sendParser(parser);
         //display.writeNewText(parser.allTokensAsString());
         System.out.println(parser.getAllTokens());
     }

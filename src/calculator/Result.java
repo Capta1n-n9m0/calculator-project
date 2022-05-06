@@ -4,13 +4,22 @@ import numerics.Complex;
 
 import java.io.Serializable;
 
-public class Result implements Serializable {
+public class Result implements Serializable, ICalculable {
     private final Complex answer;
     private final StatusCode statusCode;
 
     public Result(Complex answer, StatusCode statusCode){
         this.answer = answer;
         this.statusCode = statusCode;
+    }
+    public Result(Complex c){
+        if(c == null){
+            this.answer = null;
+            this.statusCode = StatusCode.SyntaxError;
+        }else {
+            this.answer = c;
+            this.statusCode = StatusCode.OK;
+        }
     }
 
     public Complex getAnswer(){
@@ -42,6 +51,11 @@ public class Result implements Serializable {
                 throw new IllegalStateException("Unknown status code: " + statusCode);
             }
         }
-        return String.format("Result { %s; %s}", s, answer);
+        return String.format("Result {%s; %s}", s, answer);
+    }
+
+    @Override
+    public Result getValue() throws Exception {
+        return this;
     }
 }

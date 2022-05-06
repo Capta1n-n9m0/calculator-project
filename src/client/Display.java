@@ -1,5 +1,7 @@
 package client;
 
+import calculator.ParserV3;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -95,6 +97,20 @@ public class Display extends JPanel {
             sendValue(new LinkedList<>(tokens.subList(0, tokens.size())));
         }else {
             sendValue(new LinkedList<>(tokens.subList(4, tokens.size())));
+        }
+    }
+    public void sendParser(ParserV3 parser){
+        if(parser.errorMessage == null)
+            sendTokens(parser.getAllTokens());
+        else{
+            sendExpression(new LinkedList<>());
+            valueText.delete(0, valueText.length());
+            valueText.append("<html>");
+            valueText.append("<font style=\"color:red;\">");
+            valueText.append(parser.errorMessage);
+            valueText.append("</font>");
+            valueText.append("</html>");
+            value.setText(valueText.toString());
         }
     }
 

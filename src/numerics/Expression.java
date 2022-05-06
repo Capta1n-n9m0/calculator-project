@@ -14,7 +14,7 @@ public class Expression implements ICalculable {
      * when needed and use Expression alongside Complex.
      */
     private ICalculable value1 = null, value2 = null;
-    private Complex result = null;
+    private Result result = null;
     private Operation operation;
     private ICalculator calculator;
 
@@ -42,18 +42,18 @@ public class Expression implements ICalculable {
         this.value2 = c2;
     }
 
-    public Complex getValue() throws Exception{
-        return Calculate().getAnswer();
+    public Result getValue() throws Exception{
+        return Calculate();
     }
 
     public Result Calculate() throws Exception{
         if(result != null)
-            return new Result(result, StatusCode.OK);
+            return result;
         if(value1 == null){
-            return calculator.add(Constants.ZERO_COMPLEX.getValue(), Constants.ZERO_COMPLEX);
+            value1 = new Result(Constants.ZERO_COMPLEX, StatusCode.OK);
         }else{
             if(operation == null){
-                return calculator.add(value1.getValue(), Constants.ZERO_COMPLEX.getValue());
+                operation = Operation.ADD;
             }else {
                 if (value2 == null) {
                     value2 = value1;
@@ -61,20 +61,13 @@ public class Expression implements ICalculable {
             }
         }
         switch (this.operation){
-            case ADD -> {
-                return calculator.add(value1.getValue(), value2.getValue());
-            }
-            case SUBTRACT -> {
-                return calculator.subtract(value1.getValue(), value2.getValue());
-            }
-            case MULTIPLY -> {
-                return calculator.multiply(value1.getValue(), value2.getValue());
-            }
-            case DIVIDE -> {
-                return calculator.divide(value1.getValue(), value2.getValue());
-            }
-            default -> throw new IllegalStateException("Invalid operation: " + this.operation);
+            case ADD ->         result = calculator.add(value1.getValue(), value2.getValue());
+            case SUBTRACT ->    result = calculator.subtract(value1.getValue(), value2.getValue());
+            case MULTIPLY ->    result = calculator.multiply(value1.getValue(), value2.getValue());
+            case DIVIDE ->      result = calculator.divide(value1.getValue(), value2.getValue());
+            default ->          throw new IllegalStateException("Invalid operation: " + this.operation);
         }
+        return result;
     }
 
     // These setters are wrong, but it works for now
