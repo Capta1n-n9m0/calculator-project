@@ -6,10 +6,12 @@ import numerics.*;
 
 
 import java.awt.event.KeyEvent;
+import java.net.NetworkInterface;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.LinkedList;
 import java.util.Locale;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -65,7 +67,7 @@ public class Main {
     }
     public static void testGUI() throws Exception{
         UserInterface UI = new UserInterface();
-        String input = "6+8i/0+0=";
+        String input = "6+8i/3+4=";
         for(char c : input.toCharArray()){
             UI.inputProcessor(c);
         }

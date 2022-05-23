@@ -7,7 +7,7 @@ import numerics.Polar;
 public class Constants {
     final public static int PORT = 5900;
     final public static String TAG = "Calculator";
-    final public static String SERVER = "127.0.0.1";
+    final public static String SERVER = "192.168.154.149";
     final public static Coordinate ORIGIN_C = new Coordinate(0 ,0);
     final public static Polar ORIGIN_P = new Polar(0, 0);
     final public static Complex ZERO_COMPLEX = new Complex(ORIGIN_C);
