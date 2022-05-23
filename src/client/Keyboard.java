@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Keyboard extends JPanel {
     private final ArrayList<String> buttons = new ArrayList<String>(){
         {
-            add("⇄");add("C");add("⌫");add("÷");
+            add("i");add("C");add("⌫");add("÷");
             add("7");add("8");add("9");add("x");
             add("4");add("5");add("6");add("-");
             add("1");add("2");add("3");add("+");
